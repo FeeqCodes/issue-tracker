@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import { usePathname } from 'next/navigation';
 import React from 'react'
@@ -17,7 +19,7 @@ const Navbar = () => {
     <nav className="flex space-x-6 border-b mb-5 px-5 items-center h-14">
       <Link href=""><AiFillBug /></Link>
       <ul className="flex space-x-6">
-        <li>
+        <li className="flex space-x-6">
           { links.map(link => 
             <Link 
               key={link.href} 
