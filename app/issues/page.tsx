@@ -2,17 +2,26 @@ import prisma from "@/prisma/client";
 import { Button, Table } from "@radix-ui/themes";
 import Link from "next/link";
 import React from "react";
+import StatusBadge from "../components/StatusBadge";
+import delay from "delay"
+import IssuesActions from "./IssuesActions";
+
+/**
+ * 
+ * @todo
+ * install delay
+ * install react-loading-skeleton@3.3.1
+ */
 
 const IssuesPage = async function () {
   const issues = await prisma.issue.findMany();
+  await delay(2000);
+
+
 
   return (
     <div>
-      <div className="mb-5">
-        <Button>
-          <Link href="/issues/new">New Issue</Link>
-        </Button>
-      </div>
+     <IssuesActions />
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
@@ -30,10 +39,10 @@ const IssuesPage = async function () {
             <Table.Row key={issue.id}>
               <Table.Cell>  
                 {issue.title}
-                <div className="block md:hidden">{issue.status}</div>
+                <div className="block md:hidden"><StatusBadge  status={issue.status}/></div>
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                {issue.status}
+                <StatusBadge status={issue.status}/>
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
                 {issue.createdAt.toDateString()}
