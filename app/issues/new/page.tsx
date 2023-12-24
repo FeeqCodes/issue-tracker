@@ -9,21 +9,11 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createIssueSchema } from "@app/validationSchemas";
 import { z } from "zod";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
+import { createIssueSchema } from "@/app/validationSchemas";
 
-/**
- * todo
- * install  @hookform/resolvers@3.3.1
- * tailwind element spinners
- */
-
-// interface IssueForm {
-//   title: string;
-//   description: string;
-// }
 
 // or generate interface based on schema
 type IssueForm = z.infer<typeof createIssueSchema>;
