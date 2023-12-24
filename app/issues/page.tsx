@@ -6,12 +6,7 @@ import StatusBadge from "../components/StatusBadge";
 import delay from "delay"
 import IssuesActions from "./IssuesActions";
 
-/**
- * 
- * @todo
- * install delay
- * install react-loading-skeleton@3.3.1
- */
+
 
 const IssuesPage = async function () {
   const issues = await prisma.issue.findMany();
