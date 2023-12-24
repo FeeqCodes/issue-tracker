@@ -9,6 +9,8 @@ import IssuesActions from './IssuesActions';
 
 
 const LoadingIssuesPage = () => {
+    const issues = [1,2,3,4,5]
+
   return (
     <div>
         <IssuesActions />
@@ -26,7 +28,7 @@ const LoadingIssuesPage = () => {
           </Table.Header>
           <Table.Body>
             {issues.map((issue) => (
-              <Table.Row key={issue.id}>
+              <Table.Row key={issue}>
                 <Table.Cell>
                   <Skeleton />
                   <div className="block md:hidden">
