@@ -21,7 +21,7 @@ const IssuesPage = async function () {
 
   return (
     <div>
-     <IssuesActions />
+      <IssuesActions />
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
@@ -37,12 +37,17 @@ const IssuesPage = async function () {
         <Table.Body>
           {issues.map((issue) => (
             <Table.Row key={issue.id}>
-              <Table.Cell>  
-                {issue.title}
-                <div className="block md:hidden"><StatusBadge  status={issue.status}/></div>
+              <Table.Cell>
+                <Link href={`/issues/${issue.id}`}>
+                  {issue.title}
+                </Link>
+
+                <div className="block md:hidden">
+                  <StatusBadge status={issue.status} />
+                </div>
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                <StatusBadge status={issue.status}/>
+                <StatusBadge status={issue.status} />
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
                 {issue.createdAt.toDateString()}
