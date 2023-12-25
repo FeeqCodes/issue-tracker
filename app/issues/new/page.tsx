@@ -9,10 +9,11 @@ import { useRouter } from "next/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import ErrorMessage from "@/app/components/ErrorMessage";
-import Spinner from "@/app/components/Spinner";
+
 import { createIssueSchema } from "@/app/validationSchemas";
 import dynamic from "next/dynamic";
+import { ErrorMessage, Spinner } from "@/app/components";
+
 
 
 // Disable SSR for loading MDE
@@ -20,10 +21,8 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
 });
 
-
 // or generate interface based on schema
 type IssueForm = z.infer<typeof createIssueSchema>;
-
 
 const NewIssuePage = () => {
   const {
