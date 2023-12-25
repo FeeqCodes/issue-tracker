@@ -6,6 +6,7 @@ import { StatusBadge } from "@/app/components";
 import { Pencil2icon} from '@radix-ui/react-icons'
 import delay from "delay";
 import Link from "next/link";
+import EditIssueButton from "./EditIssueButton";
 
 
 
@@ -48,12 +49,8 @@ const IssueDetailPage = async ({ params }: Props) => {
           <ReactMarkdown>{issue.description}</ReactMarkdown>
         </Card>
       </Box>
-      <Box>
-        <Button>
-          <Pencil2Icon />
-          <Link href={`/issues/${issue.id}/edit`}>Edit Issue</Link>
-        </Button>
-      </Box>
+      {/* SRP: Single responsibility principle */}
+      <EditIssueButton issueId={issue.id} />
     </Grid>
   );
 };
