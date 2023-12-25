@@ -1,3 +1,4 @@
+import { Pencil2Icon } from '@radix-ui/react-icons';
 import { Box, Button } from '@radix-ui/themes';
 import Link from 'next/link';
 import React from 'react'
@@ -13,6 +14,6 @@ const EditIssueButton = ({ issueId }: { issueId: number }) => {
       </Button>
     </Box>
   );
-}
+};
 
 export default EditIssueButton
