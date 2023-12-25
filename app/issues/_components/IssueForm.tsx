@@ -1,42 +1,28 @@
 "use client";
 
-import { Button, Callout, Text, TextArea, TextField } from "@radix-ui/themes";
-import React, { useState } from "react";
-import "easymde/dist/easymde.min.css";
-import { useForm, Controller } from "react-hook-form";
+import { Button, Callout, TextField } from "@radix-ui/themes";
 import axios from "axios";
+import "easymde/dist/easymde.min.css";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-import { issueSchema } from "@/app/validationSchemas";
-import dynamic from "next/dynamic";
 import { ErrorMessage, Spinner } from "@/app/components";
+import { issueSchema } from "@/app/validationSchemas";
 import { Issue } from "@prisma/client";
-
-
-
-
-// Disable SSR for loading MDE
-const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
-  ssr: false,
-});
-
-
-
+import SimpleMDE from "react-simplemde-editor";
 
 // or generate interface based on schema
 type IssueFormData = z.infer<typeof issueSchema>;
 
-interface Props {
-  issue?: Issue;
-}
+// interface Props {
+//   issue?: Issue;
+// }
 
-
-
-export default function IssueForm ({ issue }: Props) {
-
+export default function IssueForm({ issue }: { issue?: Issue }) {
   const {
     register,
     control,
@@ -49,24 +35,15 @@ export default function IssueForm ({ issue }: Props) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-
-
   // handlers
   const onSubmit = handleSubmit(async (data) => {
     try {
       setIsLoading(true);
 
-      if (issue) {
-        await axios.post("/api/issues/" + issue.id, data);
-         console.log("Submitted");
-
-      } else {
-        await axios.post("/api/issues", data);
-         router.push("/issues");
-         router.refresh();
-         console.log("Submitted");
-      }
-      
+      if (issue) await axios.patch("/api/issues/" + issue.id, data);
+      else await axios.post("/api/issues", data);
+      router.push("/issues");
+      router.refresh();
     } catch (error) {
       setIsLoading(false);
 
@@ -75,7 +52,6 @@ export default function IssueForm ({ issue }: Props) {
     }
   });
 
-  
   return (
     <div className="max-w-xl">
       {error && (
@@ -111,6 +87,4 @@ export default function IssueForm ({ issue }: Props) {
       </form>
     </div>
   );
-};
-
-
+}
