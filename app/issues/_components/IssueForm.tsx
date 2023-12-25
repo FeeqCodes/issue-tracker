@@ -15,20 +15,28 @@ import dynamic from "next/dynamic";
 import { ErrorMessage, Spinner } from "@/app/components";
 import { Issue } from "@prisma/client";
 
+
+
+
 // Disable SSR for loading MDE
 const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
 });
 
+
+
+
 // or generate interface based on schema
 type IssueFormData = z.infer<typeof issueSchema>;
 
 interface Props {
-  issue?: Issue
+  issue?: Issue;
 }
 
 
-const IssueForm = ({ issue }: Props) => {
+
+export default function IssueForm ({ issue }: Props) {
+
   const {
     register,
     control,
@@ -41,15 +49,24 @@ const IssueForm = ({ issue }: Props) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
+
+
   // handlers
   const onSubmit = handleSubmit(async (data) => {
     try {
       setIsLoading(true);
 
-      await axios.post("/api/issues", data);
+      if (issue) {
+        await axios.post("/api/issues/" + issue.id, data);
+
+      } else {
+        await axios.post("/api/issues", data);
+      }
 
       router.push("/issues");
+
       console.log("Submitted");
+      
     } catch (error) {
       setIsLoading(false);
 
@@ -58,6 +75,7 @@ const IssueForm = ({ issue }: Props) => {
     }
   });
 
+  
   return (
     <div className="max-w-xl">
       {error && (
@@ -67,7 +85,11 @@ const IssueForm = ({ issue }: Props) => {
       )}
       <form className=" space-y-3" onSubmit={onSubmit}>
         <TextField.Root>
-          <TextField.Input defaultValue={issue?.title} placeholder="Title" {...register("title")} />
+          <TextField.Input
+            defaultValue={issue?.title}
+            placeholder="Title"
+            {...register("title")}
+          />
         </TextField.Root>
         {errors.title && <ErrorMessage>{errors.title.message}</ErrorMessage>}
         <Controller
@@ -83,11 +105,12 @@ const IssueForm = ({ issue }: Props) => {
         )}
 
         <Button disabled={isLoading}>
-          Submit new issue {isLoading && <Spinner></Spinner>}{" "}
+          {issue ? "Update Issue" : "Submit new issue "}
+          {isLoading && <Spinner></Spinner>}{" "}
         </Button>
       </form>
     </div>
   );
 };
 
-export default IssueForm;
+
