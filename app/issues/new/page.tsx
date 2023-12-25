@@ -33,6 +33,7 @@ const NewIssuePage = () => {
       setIsLoading(true);
 
       await axios.post("/api/issues", data);
+      
       router.push("/issues");
       console.log("Submitted");
     } catch (error) {
