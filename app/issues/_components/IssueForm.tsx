@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-import { createIssueSchema } from "@/app/validationSchemas";
+import { issueSchema } from "@/app/validationSchemas";
 import dynamic from "next/dynamic";
 import { ErrorMessage, Spinner } from "@/app/components";
 import { Issue } from "@prisma/client";
@@ -21,7 +21,7 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
 });
 
 // or generate interface based on schema
-type IssueFormData = z.infer<typeof createIssueSchema>;
+type IssueFormData = z.infer<typeof issueSchema>;
 
 interface Props {
   issue?: Issue
@@ -35,7 +35,7 @@ const IssueForm = ({ issue }: Props) => {
     handleSubmit,
     formState: { errors },
   } = useForm<IssueFormData>({
-    resolver: zodResolver(createIssueSchema),
+    resolver: zodResolver(issueSchema),
   });
   const [error, setError] = useState("");
   const router = useRouter();
