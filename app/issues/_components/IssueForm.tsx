@@ -58,14 +58,14 @@ export default function IssueForm ({ issue }: Props) {
 
       if (issue) {
         await axios.post("/api/issues/" + issue.id, data);
+         console.log("Submitted");
 
       } else {
         await axios.post("/api/issues", data);
+         router.push("/issues");
+         router.refresh();
+         console.log("Submitted");
       }
-
-      router.push("/issues");
-
-      console.log("Submitted");
       
     } catch (error) {
       setIsLoading(false);
