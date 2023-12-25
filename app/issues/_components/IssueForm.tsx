@@ -15,12 +15,16 @@ import { issueSchema } from "@/app/validationSchemas";
 import { Issue } from "@prisma/client";
 import SimpleMDE from "react-simplemde-editor";
 
-// or generate interface based on schema
-type IssueFormData = z.infer<typeof issueSchema>;
+
 
 // interface Props {
 //   issue?: Issue;
 // }
+
+
+// or generate interface based on schema
+type IssueFormData = z.infer<typeof issueSchema>;
+
 
 export default function IssueForm({ issue }: { issue?: Issue }) {
   const {
