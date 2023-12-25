@@ -43,6 +43,7 @@ export async function DELETE(
 
   // Simulate a delay
   await delay(2000);
+  
   const issue = await prisma.issue.findUnique({
     where: { id: parseInt(params.id) },
   });
