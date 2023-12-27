@@ -4,9 +4,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { AiFillBug } from "react-icons/ai";
-import classnames from "classnames";
 import { useSession } from "next-auth/react";
-import { Box } from "@radix-ui/themes";
+import { Box, Container, Flex } from "@radix-ui/themes";
+import classNames from "classnames";
+
+
+
+
 
 const Navbar = () => {
   const links = [
@@ -14,37 +18,48 @@ const Navbar = () => {
     { label: "Issues", href: "/issues" },
   ];
 
-  const currentPath = usePathname();
-  const { status, data } = useSession()
 
+  const currentPath = usePathname();
+  // console.log(currentPath)
+  const { status, data } = useSession();
 
   return (
-    <nav className="flex space-x-6 border-b mb-5 px-5 items-center h-14">
-      <Link href="">
-        <AiFillBug />
-      </Link>
-
-      <ul className="flex space-x-6">
-        {links.map((link) => (
-          <li key={link.href}>
-            <Link
-              href={link.href}
-              className={classnames({
-                "text-zinc-900": link.href === currentPath,
-                "text-zinc-500": link.href !== currentPath,
-                "hover: text-zinc-800 transition-colors": true,
-              })}
-            >
-              {link.label}
+    <nav className=" border-b mb-5 px-5  py-3">
+      <Container>
+        <Flex justify="between">
+          <Flex align="center" gap="3">
+            <Link href="">
+              <AiFillBug />
             </Link>
-          </li>
-        ))}
-      </ul>
 
-      <Box>
-        {status === "authenticated" && <Link href="/api/auth/signout">Log Out</Link>}
-        {status === "unauthenticated" && <Link href="/api/auth/sigin">Log in</Link>}
-      </Box>
+            <ul className="flex space-x-6">
+              {links.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className={`${
+                      link.href === currentPath
+                        ? "text-gray-900"
+                        : "text-gray-500"
+                    } hover:text-gray-700 transition-all`}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Flex>
+
+          <Box>
+            {status === "authenticated" && (
+              <Link href="/api/auth/signout">Log Out</Link>
+            )}
+            {status === "unauthenticated" && (
+              <Link href="/api/auth/signin">Log in</Link>
+            )}
+          </Box>
+        </Flex>
+      </Container>
     </nav>
   );
 };
