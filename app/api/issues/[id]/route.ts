@@ -42,19 +42,20 @@ export async function DELETE(
 ) {
 
   // Simulate a delay
-  await delay(2000);
+  // await delay(2000);
   
   const issue = await prisma.issue.findUnique({
     where: { id: parseInt(params.id) },
   });
 
   if (!issue) {
+    throw new Error("no issue found")
     return NextResponse.json({ error: "invalid issue" }, { status: 404 });
   }
 
-  await prisma.issue.delete({
+  const deleteIssue = await prisma.issue.delete({
     where: { id: issue.id },
   });
 
-  return NextResponse.json({})
+  return NextResponse.json(deleteIssue)
 }
