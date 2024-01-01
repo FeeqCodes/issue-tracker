@@ -1,15 +1,17 @@
+import authOptions from "@/app/auth/authOptions";
 import { issueSchema } from "@/app/validationSchemas";
 import prisma from "@/prisma/client";
 import delay from "delay";
+import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
-
-
-
 
 export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const session = getServerSession(authOptions);
+  if (!session) return NextResponse.json({}, { status: 401 });
+
   const body = await request.json();
   const validation = issueSchema.safeParse(body);
 
@@ -34,22 +36,22 @@ export async function PATCH(
   return NextResponse.json(updatedIssue);
 }
 
-
-
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const session = getServerSession(authOptions);
+  if (!session) return NextResponse.json({}, { status: 401 });
 
   // Simulate a delay
   // await delay(2000);
-  
+
   const issue = await prisma.issue.findUnique({
     where: { id: parseInt(params.id) },
   });
 
   if (!issue) {
-    throw new Error("no issue found")
+    throw new Error("no issue found");
     return NextResponse.json({ error: "invalid issue" }, { status: 404 });
   }
 
@@ -57,5 +59,5 @@ export async function DELETE(
     where: { id: issue.id },
   });
 
-  return NextResponse.json(deleteIssue)
+  return NextResponse.json(deleteIssue);
 }

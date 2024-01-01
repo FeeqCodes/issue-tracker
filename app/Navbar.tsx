@@ -15,7 +15,7 @@ import {
 } from "@radix-ui/themes";
 import classNames from "classnames";
 import Dropdown from "./components/Dropdown";
-
+import { Skeleton} from "@/app/components"
 
 
 
@@ -65,6 +65,7 @@ const Navbar = () => {
             {status === "unauthenticated" && (
               <Link href="/api/auth/signin">Log in</Link>
             )}
+            {status === "loading" && <Skeleton width="3rem" />}
           </Box>
         </Flex>
       </Container>
