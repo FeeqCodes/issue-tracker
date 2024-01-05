@@ -15,10 +15,7 @@ import {
 } from "@radix-ui/themes";
 import classNames from "classnames";
 import Dropdown from "./components/Dropdown";
-import { Skeleton} from "@/app/components"
-
-
-
+import { Skeleton } from "@/app/components";
 
 const Navbar = () => {
   const links = [
@@ -60,7 +57,7 @@ const Navbar = () => {
           <Box>
             {status === "authenticated" && (
               // <Link href="/api/auth/signout">Log Out</Link>
-             <Dropdown session={session} />
+              <Dropdown session={session} />
             )}
             {status === "unauthenticated" && (
               <Link href="/api/auth/signin">Log in</Link>
