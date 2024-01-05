@@ -36,7 +36,7 @@ const IssueDetailPage = async ({ params }: Props) => {
       {/* SRP: Single responsibility principle */}
       {session && (
         <Box>
-          <AssigneeSelect />
+          <AssigneeSelect issue={issue}/>
           <Flex direction="column" gap="4">
             <EditIssueButton issueId={issue.id} />
             <DeleteIssueButton issueId={issue.id} />
