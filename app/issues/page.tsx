@@ -5,11 +5,29 @@ import React from "react";
 import delay from "delay";
 import IssuesActions from "./IssuesActions";
 import { StatusBadge } from "@/app/components";
+import { Status } from "@prisma/client";
 
 
 
-const IssuesPage = async function () {
-  const issues = await prisma.issue.findMany();
+
+interface Props {
+  searchParams: { status: Status}
+}
+
+
+const IssuesPage = async function ({ searchParams}: Props) {
+
+  // validate the status query before passing to prisma
+  const statuses = Object.values(Status)
+  const status = statuses.includes(searchParams.status) ? searchParams.status : undefined
+
+  const issues = await prisma.issue.findMany( {
+    where: {
+      status: status
+    }
+  });
+
+
   await delay(2000);
 
   return (
