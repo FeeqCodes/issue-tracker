@@ -38,20 +38,23 @@ export default function AssigneeSelect({ issue }: { issue: Issue }) {
   //   fetchUsers()
   // }, []);
 
+  const handleAssigneeChange = async (userId:string) => {
+    try {
+      axios.patch("/api/issues/" + issue.id, {
+        assignedToUserId: userId || null,
+      });
+      toast.success("Changed Successfully");
+    } catch (error) {
+      toast.error("Changes could not be saved.");
+    }
+  };
+
+
   return (
     <>
       <Select.Root
         defaultValue={issue.assignedToUserId || ""}
-        onValueChange={async (userId) => {
-          try {
-            axios.patch("/api/issues/" + issue.id, {
-              assignedToUserId: userId || null,
-            });
-            toast.success('Changed Successfully')
-          } catch (error) {
-            toast.error('Changes could not be saved.')
-          }
-        }}
+        onValueChange={handleAssigneeChange}
       >
         <Select.Trigger aria-placeholder="Assign..." />
         <Select.Content>
