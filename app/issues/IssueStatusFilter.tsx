@@ -18,16 +18,17 @@ const statuses: { label: string; value?: Status }[] = [
 const IssueStatusFilter = () => {
     const router = useRouter()
   return (
-    <Select.Root onValueChange={(status) => {
+    <Select.Root
+      onValueChange={(status) => {
         // create a query parameter
-        const query = status ? `?status=${status}` : ''
-        router.push('/issues' + query)
-    }}>
-
-      <Select.Trigger aria-placeholder="Filter by status..." />
+        const query = status ? `?status=${status}` : "";
+        router.push("/issues" + query);
+      }}
+    >
+      <Select.Trigger placeholder="Filter by status..." />
       <Select.Content>
         {statuses.map((status) => (
-          <Select.Item key={status.value} value={status.value || ""}>
+          <Select.Item key={status.value} value={status.value || "hello"}>
             {status.label}
           </Select.Item>
         ))}

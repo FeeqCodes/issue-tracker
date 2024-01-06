@@ -10,7 +10,7 @@ import IssueStatusFilter from './IssueStatusFilter';
 
 const IssuesActions = () => {
   return (
-    <Flex className="mb-5 justify-between"> 
+    <Flex mb="5" justify="between" > 
       <IssueStatusFilter /> 
       <Button>
         <Link href="/issues/new">New Issue</Link>
