@@ -53,18 +53,18 @@ export default function AssigneeSelect({ issue }: { issue: Issue }) {
     }
   };
 
-
+  const empty = ""
   return (
     <>
       <Select.Root
-        defaultValue={issue.assignedToUserId || ""}
+        defaultValue={issue?.assignedToUserId || empty}
         onValueChange={handleAssigneeChange}
       >
         <Select.Trigger placeholder="Assign..." />
         <Select.Content>
           <Select.Group>
             <Select.Label>Suggestions</Select.Label>
-            <Select.Item value="">Unassigned</Select.Item>
+            <Select.Item value={empty}>Unassigned</Select.Item>
             {users?.map((user) => (
               <Select.Item key={user.id} value={user.id}>
                 {user.name}

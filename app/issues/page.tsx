@@ -6,12 +6,13 @@ import delay from "delay";
 import IssuesActions from "./IssuesActions";
 import { StatusBadge } from "@/app/components";
 import { Status } from "@prisma/client";
+import Pagination from "../components/Pagination";
 
 
 
 
 interface Props {
-  searchParams: { status: Status}
+  searchParams: { status: Status, page: string}
 }
 
 
@@ -21,12 +22,21 @@ const IssuesPage = async function ({ searchParams}: Props) {
   const statuses = Object.values(Status)
   const status = statuses.includes(searchParams.status) ? searchParams.status : undefined
 
+  // pagination
+  const page = parseInt(searchParams.page ) || 1;
+  const pageSize = 10;
+
   const issues = await prisma.issue.findMany( {
     where: {
-      status: status
-    }
+      status: status,
+    },
+    skip: (page - 1) * pageSize,
+    take: pageSize
   });
 
+  const issueCount = await prisma.issue.count({
+    where: { status : status}
+  })
 
   await delay(2000);
 
@@ -70,6 +80,8 @@ const IssuesPage = async function ({ searchParams}: Props) {
           ))}
         </Table.Body>
       </Table.Root>
+
+      <Pagination pageSize={pageSize} currentPage={page} itemCount={issueCount}/>
     </div>
   );
 };
