@@ -1,14 +1,24 @@
-import { Button } from '@radix-ui/themes'
-import Image from 'next/image'
-import Pagination from './components/Pagination'
+import prisma from "@/prisma/client";
+import IssueSummary from "./IssueSummary";
 
 
 
+export default async function Home() {
+  const open = await prisma.issue.count({
+    where: { status: "OPEN" },
+  });
 
-export default function Home({ searchParams}: { searchParams: { page: string}}) {
+  const inProgress = await prisma.issue.count({
+    where: { status: "IN_PROGRESS" },
+  });
+
+  const closed = await prisma.issue.count({
+    where: { status: "CLOSED" },
+  });
+
   return (
-   <>
-    <Pagination  itemCount={100} pageSize={10} currentPage={parseInt(searchParams.page)}/>
-   </>
-  )
+    <>
+      <IssueSummary open={open} inProgress={inProgress} closed={closed} />
+    </>
+  );
 }
