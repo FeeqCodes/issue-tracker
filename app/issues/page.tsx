@@ -7,6 +7,7 @@ import IssuesActions from "./IssuesActions";
 import { StatusBadge } from "@/app/components";
 import { Status } from "@prisma/client";
 import Pagination from "../components/Pagination";
+import { Metadata } from "next";
 
 
 
@@ -88,5 +89,11 @@ const IssuesPage = async function ({ searchParams}: Props) {
 
 export const dynamic  = 'force-dynamic';
 // export const revalidate  =  0;
+
+// Metadata
+export const metadata: Metadata = {
+  title: "Issue Tracker - Issue List",
+  description: "View all project issues"
+}
 
 export default IssuesPage;
