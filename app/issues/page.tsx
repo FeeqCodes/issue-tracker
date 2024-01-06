@@ -1,5 +1,5 @@
 import prisma from "@/prisma/client";
-import { Button, Table } from "@radix-ui/themes";
+import { Button, Flex, Table } from "@radix-ui/themes";
 import Link from "next/link";
 import React from "react";
 import delay from "delay";
@@ -41,7 +41,7 @@ const IssuesPage = async function ({ searchParams}: Props) {
   await delay(2000);
 
   return (
-    <div>
+    <Flex direction="column" gap="5">
       <IssuesActions />
       <Table.Root variant="surface">
         <Table.Header>
@@ -82,7 +82,7 @@ const IssuesPage = async function ({ searchParams}: Props) {
       </Table.Root>
 
       <Pagination pageSize={pageSize} currentPage={page} itemCount={issueCount}/>
-    </div>
+    </Flex>
   );
 };
 
