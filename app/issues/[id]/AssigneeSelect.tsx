@@ -8,10 +8,6 @@ import React, { use, useEffect, useState } from "react";
 import { Skeleton } from "@/app/components";
 import toast, { Toaster } from "react-hot-toast";
 
-
-
-
-
 export default function AssigneeSelect({ issue }: { issue: Issue }) {
   // we are now using react query for fetching our users data so we can cache the list of users on our client side
   const {
@@ -42,7 +38,7 @@ export default function AssigneeSelect({ issue }: { issue: Issue }) {
   //   fetchUsers()
   // }, []);
 
-  const handleAssigneeChange = async (userId:string) => {
+  const handleAssigneeChange = async (userId: string) => {
     try {
       axios.patch("/api/issues/" + issue.id, {
         assignedToUserId: userId || null,
@@ -53,19 +49,11 @@ export default function AssigneeSelect({ issue }: { issue: Issue }) {
     }
   };
 
-<<<<<<< HEAD
-  const empty = ""
+  const empty = "";
   return (
     <>
       <Select.Root
         defaultValue={issue?.assignedToUserId || empty}
-=======
-
-  return (
-    <>
-      <Select.Root
-        defaultValue={issue.assignedToUserId || ""}
->>>>>>> 52c3bb2fbb34f46110cf264981fcf956da3313b8
         onValueChange={handleAssigneeChange}
       >
         <Select.Trigger placeholder="Assign..." />
