@@ -53,11 +53,19 @@ export default function AssigneeSelect({ issue }: { issue: Issue }) {
     }
   };
 
+<<<<<<< HEAD
   const empty = ""
   return (
     <>
       <Select.Root
         defaultValue={issue?.assignedToUserId || empty}
+=======
+
+  return (
+    <>
+      <Select.Root
+        defaultValue={issue.assignedToUserId || ""}
+>>>>>>> 52c3bb2fbb34f46110cf264981fcf956da3313b8
         onValueChange={handleAssigneeChange}
       >
         <Select.Trigger placeholder="Assign..." />
